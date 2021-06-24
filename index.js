@@ -72,6 +72,7 @@ app.post("/api/notes", (request, response) => {
   response.json(note);
 });
 
+// listen to port 3001 in dev or whatever port heroku creates
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} `);
