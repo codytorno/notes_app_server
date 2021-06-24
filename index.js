@@ -4,6 +4,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("build"));
 
 // Hardcoded set of notes
 let notes = [
@@ -28,7 +29,8 @@ let notes = [
 ];
 
 app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
+  // if static front end is not built correctly throw 404 status error
+  response.status(404).end();
 });
 
 app.get("/api/notes", (request, response) => {
