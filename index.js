@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 // Hardcoded set of notes
 let notes = [
@@ -48,7 +50,7 @@ app.delete("/api/notes/:id", (request, response) => {
 
 const generateID = () => {
   const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
-  return maxID + 1;
+  return maxId + 1;
 };
 
 app.post("/api/notes", (request, response) => {
@@ -70,6 +72,7 @@ app.post("/api/notes", (request, response) => {
   response.json(note);
 });
 
-const PORT = 3001;
-app.listen(PORT);
-console.log(`Server running on port ${PORT} `);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT} `);
+});
