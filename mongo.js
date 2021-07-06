@@ -1,7 +1,9 @@
 const mongo = require("mongoose");
+const dotenvExpand = require("dotenv-expand");
+dotenvExpand(require("dotenv").config({ path: ".env" }));
 
 // verify the correct number of arguments before connecting to database
-if (process.argv.length < 4) {
+if (process.argv.length < 2) {
   console.log(
     "Error: Incorrect Format: try node mongo.js <username> <password>"
   );
@@ -11,18 +13,14 @@ if (process.argv.length < 4) {
 console.log("arguments:", process.argv.length);
 console.log("argument 0", process.argv[0]); // the note exe path
 console.log("argument 1", process.argv[1]); // the path to this file
-console.log("argument 2", process.argv[2]); // username
-console.log("argument 3", process.argv[3]); // password
-console.log("argument 4", process.argv[4]); // Content
-console.log("argument 5", process.argv[5]); // IsImportant
-
-const username = process.argv[2];
-const password = process.argv[3];
+console.log("argument 2", process.argv[2]); // Content
+console.log("argument 3", process.argv[3]); // IsImportant
 
 // the url for the mongodb database that will store the objects as documents
-const url = `mongodb+srv://${username}:${password}@phonebookdb.ux8bp.mongodb.net/NotesDB?retryWrites=true&w=majority`;
+const url = process.env.URI;
 
 // create connection
+console.log("connecting to", url);
 mongo.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -65,8 +63,8 @@ const showAllNotes = () => {
   });
 };
 
-if (process.argv.length === 6) {
-  createNote(process.argv[4], process.argv[5]);
+if (process.argv.length === 4) {
+  createNote(process.argv[2], process.argv[3]);
 } else {
   showAllNotes();
 }
