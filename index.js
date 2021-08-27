@@ -66,14 +66,8 @@ app.put("/api/notes/:id", (request, response, next) => {
 });
 
 // Adds a new note to the database
-app.post("/api/notes", (request, response) => {
+app.post("/api/notes", (request, response, next) => {
   const body = request.body;
-
-  if (!body.content) {
-    return response.status(400).json({
-      error: "content missing",
-    });
-  }
 
   // create new note object
   const newNote = new Note({
@@ -83,9 +77,13 @@ app.post("/api/notes", (request, response) => {
   });
 
   // save note to database
-  newNote.save().then((savedNote) => {
-    response.json(savedNote);
-  });
+  newNote
+    .save()
+    .then((savedNote) => savedNote.toJSON())
+    .then((savedNote) => {
+      response.json(savedNote);
+    })
+    .catch((error) => next(error));
 });
 
 // handler of requests with unknown endpoint
@@ -100,9 +98,16 @@ app.use(unknownEndpoint);
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
 
+  // id casting error (sent object instead of string)
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
   }
+
+  // mongoDB validation Error
+  if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
+  }
+
   next(error);
 };
 

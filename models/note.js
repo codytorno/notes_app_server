@@ -21,8 +21,15 @@ mongoose
 
 // define the schema of the object to be stored
 const noteSchema = mongoose.Schema({
-  content: String,
-  date: Date,
+  content: {
+    type: String,
+    minLength: [2, "Too Small of Content"],
+    required: [true, "Content is required"],
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
   important: Boolean,
 });
 
