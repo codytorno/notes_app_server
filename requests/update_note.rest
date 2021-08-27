@@ -1,0 +1,12 @@
+
+Get http://localhost:3001/api/notes/
+
+
+###
+put http://localhost:3001/api/notes/6125ab38491741588c787fd4
+content-type: application/json
+
+{
+    "content": "Hello!",
+    "important": false
+}

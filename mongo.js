@@ -2,19 +2,20 @@ const mongo = require("mongoose");
 const dotenvExpand = require("dotenv-expand");
 dotenvExpand(require("dotenv").config({ path: ".env" }));
 
+// in console type node mongo.js -users
+
 // verify the correct number of arguments before connecting to database
-if (process.argv.length < 2) {
-  console.log(
-    "Error: Incorrect Format: try node mongo.js <username> <password>"
-  );
+if (process.argv.length < 3) {
+  console.log("Error: Incorrect Format: try node mongo.js -users");
   process.exit();
 }
 
 console.log("arguments:", process.argv.length);
 console.log("argument 0", process.argv[0]); // the note exe path
 console.log("argument 1", process.argv[1]); // the path to this file
-console.log("argument 2", process.argv[2]); // Content
-console.log("argument 3", process.argv[3]); // IsImportant
+console.log("argument 2", process.argv[2]); // function to run
+console.log("argument 3", process.argv[3]); // content
+console.log("argument 3", process.argv[3]); // isImportant
 
 // the url for the mongodb database that will store the objects as documents
 const url = process.env.URI;
@@ -63,8 +64,10 @@ const showAllNotes = () => {
   });
 };
 
-if (process.argv.length === 4) {
-  createNote(process.argv[2], process.argv[3]);
-} else {
+if (process.argv[2] === "-users") {
   showAllNotes();
+}
+
+if (process.argv[2] === "-add" && process.argv[3] && process.argv[4]) {
+  createNote(process.argv[3], process.argv[4]);
 }
