@@ -23,7 +23,7 @@ mongoose
 const noteSchema = mongoose.Schema({
   content: {
     type: String,
-    minLength: [2, "Too Small of Content"],
+    minLength: 2,
     required: [true, "Content is required"],
   },
   date: {
