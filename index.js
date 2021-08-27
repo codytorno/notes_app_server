@@ -1,13 +1,17 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
-const dotenvExpand = require("dotenv-expand");
-dotenvExpand(require("dotenv").config({ path: ".env" }));
 const Note = require("./models/note");
 const Logger = require("./logger");
 const { response } = require("express");
 
 app.use(express.static("build"));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(Logger);
 app.use(cors());
