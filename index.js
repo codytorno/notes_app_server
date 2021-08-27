@@ -19,11 +19,11 @@ app.get("/api/notes", (request, response) => {
   });
 });
 
-// // gets the front end of website
-// app.get("/", (request, response) => {
-//   // if static front end is not built correctly throw 404 status error
-//   response.status(404).end();
-// });
+// gets the front end of website
+app.get("/", (request, response) => {
+  // if static front end is not built correctly throw 404 status error
+  response.status(404).end();
+});
 
 // Get a single note in the database using ID
 app.get("/api/notes/:id", (request, response, next) => {
