@@ -8,14 +8,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const Note = require("./models/note");
 const Logger = require("./logger");
-const { response } = require("express");
 
 app.use(express.static("build"));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(Logger);
 app.use(cors());
-
 // Gets all notes
 app.get("/api/notes", (request, response) => {
   Note.find({}).then((notes) => {
@@ -48,7 +46,7 @@ app.get("/api/notes/:id", (request, response, next) => {
 app.delete("/api/notes/:id", (request, response, next) => {
   // use Mongoose method to find and delete by id
   Note.findByIdAndRemove(request.params.id)
-    .then((deletedNote) => {
+    .then(() => {
       response.status(204).end();
     })
     .catch((error) => next(error));

@@ -49,8 +49,8 @@ const createNote = (iContent, isImportant) => {
   });
   console.log("note", newNote);
 
-  newNote.save().then((result) => {
-    console.log(`added note to the database!`);
+  newNote.save().then(() => {
+    console.log("added note to the database!");
     mongo.connection.close();
   });
 };
