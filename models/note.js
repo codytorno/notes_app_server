@@ -1,24 +1,5 @@
 const mongoose = require("mongoose");
 
-// the url for the mongodb database that will store the objects as documents
-const url = process.env.URI;
-
-// create connection
-console.log("connecting to", url);
-mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  })
-  .then(() => {
-    console.log("connected to MongoDB Database");
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB Database", error.message);
-  });
-
 // define the schema of the object to be stored
 const noteSchema = mongoose.Schema({
   content: {
